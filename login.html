@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<script src="jquery-3.4.1.js"></script>
+<body>
+    <div class="center">
+        <div class="body">
+            <div class="top">密码登录</div>
+            <div class="input">
+                <input type="text" name="name"   class="name" placeholder="请输入会员名/邮箱">
+                <input type="text" name="pwd"  class="pwd" placeholder="请输入密码">
+                <input type="text" readonly class="button" value="登录" onclick="login()">
+            </div>
+            <div class="bottom">
+                <li>忘记密码</li>
+                <li>忘记会员</li>
+                <li>免费注册</li>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function login() {
+        let name = $('.name').val()
+        let pwd = $('.pwd').val()
+        let partten  = /.{4,}/.test(name)
+        //验证数据
+        if(name==''){
+            alert('用户名不能为空')
+        }else if (!partten){
+            alert('用户名必须4位以上')
+        }else if (pwd==''){
+            alert('密码不能为空')
+        }
+        $.ajax({
+            type: "POST",
+            url: "http://playground.it266.com/login",
+            data: "username="+name+'&'+"password="+pwd,
+            success: function(data){
+                $.each(JSON.parse(data),function(i,n){
+                    if (n.token!=undefined){
+                        localStorage.setItem('token',n.token)
+                        window.location.href= 'index.html'
+                    }
+                });
+            }
+        });
+
+    }
+</script>
