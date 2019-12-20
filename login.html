@@ -39,15 +39,14 @@
         }
         $.ajax({
             type: "POST",
+            dataType: "json",
             url: "http://playground.it266.com/login",
-            data: "username="+name+'&'+"password="+pwd,
+            data:{username:name,password:pwd},
             success: function(data){
-                $.each(JSON.parse(data),function(i,n){
-                    if (n.token!=undefined){
-                        localStorage.setItem('token',n.token)
+                    if (data.data.token!=undefined){
+                        localStorage.setItem('token',data.data.token)
                         window.location.href= 'index.html'
                     }
-                });
             }
         });
 

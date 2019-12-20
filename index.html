@@ -110,11 +110,13 @@
         function get(){
             $.ajax({
                 type: "get",
+                dataType: "json",
                 url: "http://playground.it266.com/profile?token="+localStorage.getItem('token'),
                 success: function(data){
+                    console.log(data)
                     $(".block").css({ "display": "none" });
                     $(".hidden").css({ "display": "block" });
-                    let list = JSON.parse(data).data
+                    let list = data.data
                     $('.hidden img').attr('src',list.avatar)
                     $('.hidden .text span').text(list.username)
                     $('.hidden #money').text(list.balance)
@@ -126,8 +128,8 @@
         get()
         var i = 1
         //获得所有li的对象
-        var imgobj = document.getElementsByClassName('imgli')
-        var bobj = document.getElementsByClassName('control')
+        var imgobj =$('.imgli')
+        var bobj = $('.control')
         //自动轮播
         function auto() {
             clearInterval(auto)
